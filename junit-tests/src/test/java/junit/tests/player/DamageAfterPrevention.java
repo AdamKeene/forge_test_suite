@@ -1,7 +1,7 @@
-package forge.game.player;
+package junit.tests.player;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +13,8 @@ import forge.game.GameType;
 import forge.game.GameRules;
 import forge.game.Match;
 import forge.game.card.Card;
+import forge.game.player.Player;
+import forge.game.player.RegisteredPlayer;
 import forge.game.spellability.SpellAbility;
 import forge.game.zone.ZoneType;
 import forge.deck.Deck;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-class DamageAfterPrevention {
+public class DamageAfterPrevention {
     private static boolean initialized = false;
     private Game game;
     private Player player;

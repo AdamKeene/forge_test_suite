@@ -1,4 +1,4 @@
-package forge.lda;
+package main.java.forge.lda;
 
 import forge.GuiDesktop;
 import forge.StaticData;
