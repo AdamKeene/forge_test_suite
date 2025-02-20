@@ -1,4 +1,4 @@
-package forge.game;
+package junit.tests;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +16,10 @@ import forge.ai.AIOption;
 import forge.ai.LobbyPlayerAi;
 import forge.deck.Deck;
 import forge.game.Game;
+import forge.game.GameRules;
 import forge.game.GameStage;
+import forge.game.GameType;
+import forge.game.Match;
 import forge.game.player.RegisteredPlayer;
 import forge.game.player.Player;
 import forge.gui.GuiBase;
