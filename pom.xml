@@ -438,7 +438,7 @@
                                                             
                     <artifactId>build-helper-maven-plugin</artifactId>
                                                             
-                    <versionRange>[3.2,)</versionRange>
+                    <versionRange>[3.2,)</versionRange> 
                                                             
                     <goals>
                                                                   
