@@ -1,6 +1,11 @@
 ## Unreleased
 ### No issue
 
+**pom edit and directory rename**
+
+
+[fc98c649fd1e265](https://github.com/AdamKeene/forge_test_suite/commit/fc98c649fd1e265) Adam K *2025-02-20 08:26:14*
+
 **new file structure**
 
 
