@@ -61,11 +61,12 @@
                 <artifactId>forge-ai</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>forge</groupId>
-                <artifactId>forge-game</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+<!--        why is there a dependency that is calling itself?-->
+<!--            <dependency>-->
+<!--                <groupId>forge</groupId>-->
+<!--                <artifactId>forge-game</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>forge</groupId>
                 <artifactId>forge-gui</artifactId>
