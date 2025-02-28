@@ -1,6 +1,11 @@
 ## Unreleased
 ### No issue
 
+**more pom changes**
+
+
+[11a442a2336eade](https://github.com/AdamKeene/forge_test_suite/commit/11a442a2336eade) Adam K *2025-02-20 10:11:05*
+
 **fixed version mismatches**
 
 
