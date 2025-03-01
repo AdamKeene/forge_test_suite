@@ -4,12 +4,15 @@ import forge.GameCommand;
 import forge.game.ability.SpellAbilityEffect;
 import forge.game.ability.effects.TokenEffectBase;
 import forge.game.card.Card;
+import forge.game.event.GameEventCardStatsChanged;
+import forge.game.phase.Phase;
 import forge.game.spellability.SpellAbility;
 import forge.game.trigger.Trigger;
 import forge.game.trigger.TriggerHandler;
 import org.junit.jupiter.api.Test;
 
 import static forge.game.ability.SpellAbilityEffect.*;
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -106,15 +109,17 @@ class SpellAbilityEffectTest {
         when(sa.getHostCard()).thenReturn(card);
         when(card.getGame()).thenReturn(game);
 
-        //Until is a GameCommand, addUntil adds once, isn't a while loop
+        //an Until is a GameCommand to be executed at end of the phase, addUntil adds once, isn't a while loop
         //addPumpUntil calls addUntil with untilEOT, on cleanup or endofturn depending on PumpDuration
         TokenEffectBase.addPumpUntil(sa, card, 123L);
-        assertNotNull(game.getCleanup());
-        assertSame(game., game.getCleanup());
+
+        // sbaCheckedCommandList returns array of queued commands
+        assertEquals(new ArrayList<GameCommand>(), game.sbaCheckedCommandList);
 
         when(sa.hasParam("PumpDuration")).thenReturn(false);
         TokenEffectBase.addPumpUntil(sa, card, 123L);
-        assertNotNull(game.getEndOfTurn());
+
+        assertEquals(new ArrayList<GameCommand>(), game.sbaCheckedCommandList);
 
     }
 }
