@@ -1,27 +1,13 @@
 package junit.test.game;
 
 import forge.GameCommand;
-import forge.game.ability.SpellAbilityEffect;
 import forge.game.ability.effects.TokenEffectBase;
 import forge.game.card.Card;
-import forge.game.event.GameEventCardStatsChanged;
-import forge.game.phase.Phase;
 import forge.game.spellability.SpellAbility;
-import forge.game.trigger.Trigger;
-import forge.game.trigger.TriggerHandler;
 import org.junit.jupiter.api.Test;
 
-import static forge.game.ability.SpellAbilityEffect.*;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,8 +16,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito.*;
 
 import forge.GuiDesktop;
 import forge.ai.AIOption;
@@ -51,7 +35,6 @@ import forge.model.FModel;
 class SpellAbilityEffectTest {
     private static boolean initialized = false;
     private Game game;
-    private Player player;
 
     @BeforeAll
     static void initialize() {
@@ -69,7 +52,7 @@ class SpellAbilityEffectTest {
     @BeforeEach
     void setUp() {
         game = resetGame();
-        player = game.getPlayers().get(0);
+        Player player = game.getPlayers().get(0);
     }
 
     private Game resetGame() {
@@ -105,7 +88,6 @@ class SpellAbilityEffectTest {
         SpellAbility sa = mock(SpellAbility.class);
         Card card = mock(Card.class);
         when(sa.hasParam("PumpDuration")).thenReturn(true);
-//        when(sa.getParam("PumpDuration")).thenReturn("UntilEndOfTurn");
         when(sa.getHostCard()).thenReturn(card);
         when(card.getGame()).thenReturn(game);
 
