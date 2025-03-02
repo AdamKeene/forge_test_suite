@@ -100,8 +100,6 @@ class SpellAbilityEffectTest {
 
         when(sa.hasParam("PumpDuration")).thenReturn(false);
         TokenEffectBase.addPumpUntil(sa, card, 123L);
-
         assertEquals(new ArrayList<GameCommand>(), game.sbaCheckedCommandList);
-
     }
 }
