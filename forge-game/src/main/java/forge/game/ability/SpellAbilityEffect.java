@@ -205,7 +205,7 @@ public abstract class SpellAbilityEffect {
 
     // Target/defined methods
     // Cards
-    protected final static CardCollection getTargetCards(final SpellAbility sa) {                                       return getCards(false, "Defined",    sa); }
+    public final static CardCollection getTargetCards(final SpellAbility sa) {                                       return getCards(false, "Defined",    sa); }
     protected final static CardCollection getTargetCards(final SpellAbility sa, final String definedParam) {            return getCards(false, definedParam, sa); }
     protected final static CardCollection getDefinedCardsOrTargeted(final SpellAbility sa) {                            return getCards(true,  "Defined",    sa); }
     protected final static CardCollection getDefinedCardsOrTargeted(final SpellAbility sa, final String definedParam) { return getCards(true,  definedParam, sa); }
@@ -216,59 +216,12 @@ public abstract class SpellAbilityEffect {
         return result;
     }
 
-    // overloaded variant that returns the unique objects instead of filling a result list
-    private static CardCollection getCards(final boolean definedFirst, final String definedParam, final SpellAbility sa) {
-        return getCards(definedFirst, definedParam, sa, null);
-    }
-    private static CardCollection getCards(final boolean definedFirst, final String definedParam, final SpellAbility sa, List<Card> resultDuplicate) {
-        if (sa.hasParam("ThisDefinedAndTgts")) {
-            CardCollection cards = AbilityUtils.getDefinedCards(sa.getHostCard(), sa.getParam("ThisDefinedAndTgts"), sa);
-            cards.addAll(sa.getTargets().getTargetCards());
-            return cards;
-        }
-
-        CardCollection resultUnique = null;
-        final boolean useTargets = sa.usesTargeting() && (!definedFirst || !sa.hasParam(definedParam));
-        if (useTargets) {
-            if (resultDuplicate == null) {
-                resultUnique = new CardCollection();
-                resultDuplicate = resultUnique;
-            }
-            sa.getTargets().getTargetCards().forEach(resultDuplicate::add);
-        } else {
-            String[] def = sa.getParamOrDefault(definedParam, "Self").split(" & ");
-            for (String d : def) {
-                CardCollection defResult = AbilityUtils.getDefinedCards(sa.getHostCard(), d, sa);
-                if (resultDuplicate == null) {
-                    resultUnique = defResult;
-                    resultDuplicate = resultUnique;
-                } else {
-                    resultDuplicate.addAll(defResult);
-                }
-            }
-        }
-        if (resultUnique == null)
-            return null;
-        if (sa.hasParam("IncludeAllComponentCards")) {
-            CardCollection components = new CardCollection();
-            for (Card c : resultUnique) {
-                components.addAll(c.getAllComponentCards(false));
-            }
-            resultUnique.addAll(components);
-        }
-        return resultUnique;
+    protected static CardCollection getCards(final boolean definedFirst, final String definedParam, final SpellAbility sa) {
+        return AbilityUtils.getCards(definedFirst, definedParam, sa, null);
     }
 
-    // Players
-    protected final static PlayerCollection getTargetPlayers(final SpellAbility sa) {                                       return getPlayers(false, "Defined",    sa); }
-    protected final static PlayerCollection getTargetPlayers(final SpellAbility sa, final String definedParam) {            return getPlayers(false, definedParam, sa); }
-    protected final static PlayerCollection getDefinedPlayersOrTargeted(final SpellAbility sa) {                            return getPlayers(true,  "Defined",    sa); }
-    protected final static PlayerCollection getDefinedPlayersOrTargeted(final SpellAbility sa, final String definedParam) { return getPlayers(true,  definedParam, sa); }
-
-    protected static List<Player> getTargetPlayersWithDuplicates(final boolean definedFirst, final String definedParam, final SpellAbility sa) {
-        List<Player> result = Lists.newArrayList();
-        getPlayers(definedFirst, definedParam, sa, result);
-        return result;
+    protected static CardCollection getCards(final boolean definedFirst, final String definedParam, final SpellAbility sa, List<Card> resultDuplicate) {
+        return AbilityUtils.getCards(definedFirst, definedParam, sa, resultDuplicate);
     }
 
     // overloaded variant that returns the unique objects instead of filling a result list
