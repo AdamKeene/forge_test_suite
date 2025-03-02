@@ -50,6 +50,7 @@ class GameStageTest {
         player = game.getPlayers().get(0);
     }
 
+    //resetGame creates game instance
     private Game resetGame() {
         List<RegisteredPlayer> players = new ArrayList<>();
         Deck deck = new Deck();
@@ -74,14 +75,15 @@ class GameStageTest {
         return game;
     }
 
-    @Test
-    void testStartGame() { // Transition to Mulligan
+    // change game state using setAge
+    @Test // Transition to Mulligan
+    void testStartGame() {
         game.setAge(GameStage.Mulligan);
         assertEquals(GameStage.Mulligan, game.getAge(), "Game should transition to Mulligan stage.");
     }
 
-    @Test
-    void testFinishMulligan() { // Mulligan to Play
+    @Test // Mulligan to Play
+    void testFinishMulligan() {
         game.setAge(GameStage.Mulligan);
         game.setAge(GameStage.Play);
         assertEquals(GameStage.Play, game.getAge(), "Game should transition to Play stage.");
@@ -95,7 +97,7 @@ class GameStageTest {
         assertEquals(GameStage.GameOver, game.getAge(), "Game should transition to GameOver stage.");
     }
 
-    @Test // Mulligan to GameOver reset to Mullgan
+    @Test // Mulligan to GameOver reset to Mulligan
     void testRestartGame() {
         game.setAge(GameStage.Mulligan);
         game.setAge(GameStage.Play);
