@@ -80,10 +80,6 @@ class SpellAbilityEffectTest {
     }
 
     @Test
-    void testSpellAbilityEffect() {
-    }
-
-    @Test
     void testaddPumpUntil() {
         SpellAbility sa = mock(SpellAbility.class);
         Card card = mock(Card.class);
