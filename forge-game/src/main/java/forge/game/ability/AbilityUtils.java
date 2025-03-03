@@ -94,19 +94,6 @@ public class AbilityUtils {
         return resultUnique;
     }
 
-    // Players
-    protected final static PlayerCollection getTargetPlayers(final SpellAbility sa) {                                       return getPlayers(false, "Defined",    sa); }
-    protected final static PlayerCollection getTargetPlayers(final SpellAbility sa, final String definedParam) {            return getPlayers(false, definedParam, sa); }
-    protected final static PlayerCollection getDefinedPlayersOrTargeted(final SpellAbility sa) {                            return getPlayers(true,  "Defined",    sa); }
-    protected final static PlayerCollection getDefinedPlayersOrTargeted(final SpellAbility sa, final String definedParam) { return getPlayers(true,  definedParam, sa); }
-
-    protected static List<Player> getTargetPlayersWithDuplicates(final boolean definedFirst, final String definedParam, final SpellAbility sa) {
-        List<Player> result = Lists.newArrayList();
-        getPlayers(definedFirst, definedParam, sa, result);
-        return result;
-    }
-
-
     public static CardCollection getDefinedCards(final Card hostCard, final String def, CardTraitBase sa) {
         CardCollection cards = new CardCollection();
         String changedDef = (def == null) ? "Self" : applyAbilityTextChangeEffects(def, sa); // default to Self
