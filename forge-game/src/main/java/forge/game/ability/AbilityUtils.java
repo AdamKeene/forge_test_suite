@@ -53,6 +53,47 @@ public class AbilityUtils {
     // But then we only need update one function at a time once the casting is
     // everywhere.
     // Probably will move to One function solution sometime in the future
+
+    // overloaded variant that returns the unique objects instead of filling a result list
+    public static CardCollection getCards(final boolean definedFirst, final String definedParam, final SpellAbility sa, List<Card> resultDuplicate) {
+        if (sa.hasParam("ThisDefinedAndTgts")) {
+            CardCollection cards = AbilityUtils.getDefinedCards(sa.getHostCard(), sa.getParam("ThisDefinedAndTgts"), sa);
+            cards.addAll(sa.getTargets().getTargetCards());
+            return cards;
+        }
+
+        CardCollection resultUnique = null;
+        final boolean useTargets = sa.usesTargeting() && (!definedFirst || !sa.hasParam(definedParam));
+        if (useTargets) {
+            if (resultDuplicate == null) {
+                resultUnique = new CardCollection();
+                resultDuplicate = resultUnique;
+            }
+            sa.getTargets().getTargetCards().forEach(resultDuplicate::add);
+        } else {
+            String[] def = sa.getParamOrDefault(definedParam, "Self").split(" & ");
+            for (String d : def) {
+                CardCollection defResult = AbilityUtils.getDefinedCards(sa.getHostCard(), d, sa);
+                if (resultDuplicate == null) {
+                    resultUnique = defResult;
+                    resultDuplicate = resultUnique;
+                } else {
+                    resultDuplicate.addAll(defResult);
+                }
+            }
+        }
+        if (resultUnique == null)
+            return null;
+        if (sa.hasParam("IncludeAllComponentCards")) {
+            CardCollection components = new CardCollection();
+            for (Card c : resultUnique) {
+                components.addAll(c.getAllComponentCards(false));
+            }
+            resultUnique.addAll(components);
+        }
+        return resultUnique;
+    }
+
     public static CardCollection getDefinedCards(final Card hostCard, final String def, CardTraitBase sa) {
         CardCollection cards = new CardCollection();
         String changedDef = (def == null) ? "Self" : applyAbilityTextChangeEffects(def, sa); // default to Self

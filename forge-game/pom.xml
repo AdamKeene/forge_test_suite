@@ -34,48 +34,5 @@
             <artifactId>sentry-logback</artifactId>
             <version>7.15.0</version>
         </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>4.0.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-junit-jupiter</artifactId>
-                <version>4.0.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>forge</groupId>
-                <artifactId>forge-ai</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-<!--        why is there a dependency that is calling itself?-->
-<!--            <dependency>-->
-<!--                <groupId>forge</groupId>-->
-<!--                <artifactId>forge-game</artifactId>-->
-<!--                <version>${project.version}</version>-->
-<!--            </dependency>-->
-            <dependency>
-                <groupId>forge</groupId>
-                <artifactId>forge-gui</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>forge</groupId>
-                <artifactId>forge-gui-desktop</artifactId>
-                <version>${project.version}</version>
-            </dependency>
     </dependencies>
 </project>

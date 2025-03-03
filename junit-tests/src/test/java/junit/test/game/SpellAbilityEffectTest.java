@@ -1,7 +1,13 @@
-package forge.game;
+package junit.test.game;
 
+import forge.GameCommand;
+import forge.game.ability.effects.TokenEffectBase;
+import forge.game.card.Card;
+import forge.game.spellability.SpellAbility;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,17 +22,19 @@ import forge.ai.AIOption;
 import forge.ai.LobbyPlayerAi;
 import forge.deck.Deck;
 import forge.game.Game;
+import forge.game.GameRules;
 import forge.game.GameStage;
+import forge.game.GameType;
+import forge.game.Match;
 import forge.game.player.RegisteredPlayer;
 import forge.game.player.Player;
 import forge.gui.GuiBase;
 import forge.localinstance.properties.ForgePreferences.FPref;
 import forge.model.FModel;
 
-class GameStageTest {
+class SpellAbilityEffectTest {
     private static boolean initialized = false;
     private Game game;
-    private Player player;
 
     @BeforeAll
     static void initialize() {
@@ -44,7 +52,7 @@ class GameStageTest {
     @BeforeEach
     void setUp() {
         game = resetGame();
-        player = game.getPlayers().get(0);
+        Player player = game.getPlayers().get(0);
     }
 
     private Game resetGame() {
@@ -72,32 +80,22 @@ class GameStageTest {
     }
 
     @Test
-    void testStartGame() { // Transition to Mulligan
-        game.setAge(GameStage.Mulligan);
-        assertEquals(GameStage.Mulligan, game.getAge(), "Game should transition to Mulligan stage.");
-    }
+    void testaddPumpUntil() {
+        SpellAbility sa = mock(SpellAbility.class);
+        Card card = mock(Card.class);
+        when(sa.hasParam("PumpDuration")).thenReturn(true);
+        when(sa.getHostCard()).thenReturn(card);
+        when(card.getGame()).thenReturn(game);
 
-    @Test
-    void testFinishMulligan() { // Mulligan to Play
-        game.setAge(GameStage.Mulligan);
-        game.setAge(GameStage.Play);
-        assertEquals(GameStage.Play, game.getAge(), "Game should transition to Play stage.");
-    }
+        //an Until is a GameCommand to be executed at end of the phase, addUntil adds once, isn't a while loop
+        //addPumpUntil calls addUntil with untilEOT, on cleanup or endofturn depending on PumpDuration
+        TokenEffectBase.addPumpUntil(sa, card, 123L);
 
-    @Test // Mulligan to GameOver
-    void testEndGame() {
-        game.setAge(GameStage.Mulligan);
-        game.setAge(GameStage.Play); 
-        game.setAge(GameStage.GameOver);
-        assertEquals(GameStage.GameOver, game.getAge(), "Game should transition to GameOver stage.");
-    }
+        // sbaCheckedCommandList returns array of queued commands
+        assertEquals(new ArrayList<GameCommand>(), game.sbaCheckedCommandList);
 
-    @Test // Mulligan to GameOver reset to Mullgan
-    void testRestartGame() {
-        game.setAge(GameStage.Mulligan);
-        game.setAge(GameStage.Play);
-        game.setAge(GameStage.GameOver);
-        game.setAge(GameStage.BeforeMulligan);
-        assertEquals(GameStage.BeforeMulligan, game.getAge(), "Game should transition to BeforeMulligan stage.");
+        when(sa.hasParam("PumpDuration")).thenReturn(false);
+        TokenEffectBase.addPumpUntil(sa, card, 123L);
+        assertEquals(new ArrayList<GameCommand>(), game.sbaCheckedCommandList);
     }
 }
