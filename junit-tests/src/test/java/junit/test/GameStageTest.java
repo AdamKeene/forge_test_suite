@@ -1,4 +1,5 @@
 package junit.test;
+// PART 2: FINITE STATE MACHINE
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

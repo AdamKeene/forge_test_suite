@@ -1,4 +1,5 @@
 package junit.test;
+// SYSTEMATIC FUNCTIONAL / PARTITION TESTING
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
