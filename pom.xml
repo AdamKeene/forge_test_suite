@@ -207,7 +207,22 @@
           </configuration>
                           
         </plugin>
-                        
+        <!--        plugin for spotbugs-->
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>4.7.3.0</version>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>spotbugs</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+
         <plugin>
                               
           <groupId>org.apache.maven.plugins</groupId>
